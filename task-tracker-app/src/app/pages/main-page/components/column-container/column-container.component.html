@@ -1,0 +1,21 @@
+<div class="example-container">
+    <div class="container">
+        <div class="item">
+            <h2>{{ title }}</h2>
+        </div>
+        <div class="example-button-container item" *ngIf="isAddTask">
+            <button mat-mini-fab color="custom-color" (click)="onAddTask()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div
+        cdkDropList
+        [cdkDropListData]="tasks"
+        class="example-list"
+        (cdkDropListDropped)="onDrop($event)">
+        @for (item of tasks; track item) {
+            <app-task-card class="example-box" cdkDrag [task]="item" />
+        }
+    </div>
+</div>
