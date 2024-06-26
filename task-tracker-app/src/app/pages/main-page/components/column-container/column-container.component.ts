@@ -13,18 +13,22 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { TaskCardComponent } from "../task-card/task-card.component";
 import { TaskCardModel } from "../../models/task-card-model";
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { AddTaskBodyDialogComponent } from "../add-task-body-dialog/add-task-body-dialog.component";
 
 @Component({
     selector: 'app-column-container',
     standalone: true,
     templateUrl: './column-container.component.html',
     styleUrl: './column-container.component.css',
-    imports: [CdkDropListGroup, CdkDropList, CdkDrag, MatButtonModule, MatDividerModule, MatIconModule, NgIf, TaskCardComponent]
+    imports: [CdkDropListGroup, CdkDropList, CdkDrag, MatButtonModule, MatDividerModule, MatIconModule, NgIf, TaskCardComponent, MatDialogModule, AddTaskBodyDialogComponent]
 })
 export class ColumnContainerComponent {
   @Input() title!: string;
   @Input() isAddTask: boolean = false;
   tasks: TaskCardModel[] = [];
+
+  constructor(private matDialog: MatDialog) {}
 
   onDrop(event: CdkDragDrop<TaskCardModel[]>) {
     if (event.previousContainer === event.container) {
@@ -47,5 +51,9 @@ export class ColumnContainerComponent {
     };
 
     this.tasks.push(task);
+
+    /*this.matDialog.open(AddTaskBodyDialogComponent, {
+      width: '350px',
+    })*/
   }
 }

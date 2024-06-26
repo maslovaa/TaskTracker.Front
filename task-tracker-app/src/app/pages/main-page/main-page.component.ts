@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from "./components/header/header.component";
-import { DeskContainerComponent } from "./components/desk-container/desk-container.component";
+import { SideMenuComponent } from "./components/side-menu/side-menu.component";
 
 @Component({
     selector: 'app-main-page',
     standalone: true,
     templateUrl: './main-page.component.html',
     styleUrl: './main-page.component.css',
-    imports: [HeaderComponent, DeskContainerComponent]
+    imports: [SideMenuComponent]
 })
 export class MainPageComponent {
 
