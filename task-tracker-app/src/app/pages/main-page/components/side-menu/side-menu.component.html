@@ -26,9 +26,10 @@
                     Проекты
                 </mat-expansion-panel-header>
                 <mat-nav-list>
-                    <a mat-list-item routerLink="#">
-                        Добавить
-                    </a>
+                    @for (item of projects; track item) {
+                        <a mat-list-item>{{ item.name }}</a>
+                    }
+                    <a mat-list-item (click)="onAddProject()">Добавить</a>
                 </mat-nav-list>
             </mat-expansion-panel>
             <mat-expansion-panel [class.mat-elevation-z0]="true">
@@ -36,7 +37,10 @@
                     Доски
                 </mat-expansion-panel-header>
                 <mat-nav-list>
-                    <a mat-list-item routerLink="#">Добавить</a>
+                    @for (item of desks; track item) {
+                        <a mat-list-item>{{ item.name }}</a>
+                    }
+                    <a mat-list-item (click)="onAddDesk()">Добавить</a>
                 </mat-nav-list>
             </mat-expansion-panel>
         </mat-nav-list>

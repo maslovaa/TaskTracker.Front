@@ -28,7 +28,9 @@ export class ColumnContainerComponent {
   @Input() isAddTask: boolean = false;
   tasks: TaskCardModel[] = [];
 
-  constructor(private matDialog: MatDialog) {}
+  dataFromDialog!: TaskCardModel;
+
+  constructor(private dialog: MatDialog) {}
 
   onDrop(event: CdkDragDrop<TaskCardModel[]>) {
     if (event.previousContainer === event.container) {
@@ -45,15 +47,19 @@ export class ColumnContainerComponent {
   }
 
   onAddTask() {
-    const task: TaskCardModel = {
-      taskName: "Добавить авторизацию",
-      taskDescription: "111111111111111111111"
-    };
+    const dialogRef = this.dialog.open(AddTaskBodyDialogComponent,
+      { width: '350px', height: '400px' });
 
-    this.tasks.push(task);
+    dialogRef.afterClosed().subscribe((data) => {
+      this.dataFromDialog = data?.form;
+      if (data?.clicked === 'submit') {
+        const task: TaskCardModel = {
+          taskName: this.dataFromDialog.taskName,
+          taskDescription: this.dataFromDialog.taskDescription
+        };
 
-    /*this.matDialog.open(AddTaskBodyDialogComponent, {
-      width: '350px',
-    })*/
+        this.tasks.push(task);
+      }
+    });
   }
 }
