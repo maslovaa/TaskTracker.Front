@@ -1,0 +1,30 @@
+<div class="form-container">
+    <h2 mat-dialog-title>
+        Добавить доску
+    </h2>
+    <mat-dialog-content>
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+            <mat-form-field>
+              <input matInput formControlName="name" placeholder="Name">
+            </mat-form-field>
+            <mat-error *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+                Name is required
+            </mat-error>
+            <mat-form-field>
+                <mat-label>Проекты</mat-label>
+                <mat-select formControlName="projectId" required>
+                    <mat-option>--</mat-option>
+                    @for (project of projects; track project) {
+                        <mat-option [value]="project.id">{{project.name}}</mat-option>
+                    }
+                </mat-select>
+                @if (form.get('projectId')) {
+                    <mat-error>Please choose an animal</mat-error>
+                }
+            </mat-form-field>
+            <br />
+            <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">Submit</button>
+            <button type="button" mat-raised-button (click)="dialogRef.close(false)" color="primary">Close</button>
+        </form>
+    </mat-dialog-content>
+</div>
