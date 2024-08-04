@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,9 +11,10 @@ import { DeskModel } from "../../../../models/desk-model";
 import { MatSelectModule } from '@angular/material/select'
 import { ProjectModel } from '../../../../models/project-model';
 import { ProjectService } from '../../../../services/project.service';
+import { DeskService } from '../../../../services/desk.service';
 
 @Component({
-  selector: 'app-add-desk-body-dialog',
+  selector: 'app-update-desk-body-dialog',
   standalone: true,
   imports: [
     MatIconModule, 
@@ -26,14 +27,16 @@ import { ProjectService } from '../../../../services/project.service';
     NgIf,
     MatSelectModule
   ],
-  templateUrl: './add-desk-body-dialog.component.html',
-  styleUrl: './add-desk-body-dialog.component.css'
+  templateUrl: './update-desk-body-dialog.component.html',
+  styleUrl: './update-desk-body-dialog.component.css'
 })
-export class AddDeskBodyDialogComponent {
+export class UpdateDeskBodyDialogComponent {
   form: FormGroup;
   projects!: ProjectModel[];
+  readonly dialogRef = inject(MatDialogRef<UpdateDeskBodyDialogComponent>);
+  readonly id = inject<string>(MAT_DIALOG_DATA);
 
-  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<AddDeskBodyDialogComponent>, private projectService: ProjectService) { 
+  constructor(private fb: FormBuilder, private projectService: ProjectService, private deskService: DeskService) { 
     this.form = this.fb.group({
       name: ['', Validators.required],
       projectId: ['', Validators.required]
@@ -43,6 +46,14 @@ export class AddDeskBodyDialogComponent {
   ngOnInit() {
     this.projectService.getProjects().subscribe((data: ProjectModel[]) => {
       this.projects = data;
+      
+      this.deskService.getDesksId(this.id).subscribe((data) => {
+        this.form = this.fb.group({
+          id: this.id,
+          name: [data.name, Validators.required],
+          projectId: [data.projectId, Validators.required]
+        });
+      })
     });
   }
 

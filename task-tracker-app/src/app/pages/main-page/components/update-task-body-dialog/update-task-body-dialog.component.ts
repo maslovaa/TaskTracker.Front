@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Inject, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,9 +8,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgIf } from "@angular/common";
 import { TaskModel } from "../../../../models/task-model";
+import { TaskService } from '../../../../services/task.service';
 
 @Component({
-  selector: 'app-add-task-body-dialog',
+  selector: 'app-update-task-body-dialog',
   standalone: true,
   imports: [
     MatIconModule, 
@@ -22,22 +23,37 @@ import { TaskModel } from "../../../../models/task-model";
     FormsModule, 
     NgIf
   ],
-  templateUrl: './add-task-body-dialog.component.html',
-  styleUrl: './add-task-body-dialog.component.css'
+  templateUrl: './update-task-body-dialog.component.html',
+  styleUrl: './update-task-body-dialog.component.css'
 })
-export class AddTaskBodyDialogComponent {
+export class UpdateTaskBodyDialogComponent implements OnInit {
   form: FormGroup;
-  readonly dialogRef = inject(MatDialogRef<AddTaskBodyDialogComponent>);
-  readonly data = inject(MAT_DIALOG_DATA);
+  readonly dialogRef = inject(MatDialogRef<UpdateTaskBodyDialogComponent>);
+  readonly id = inject<string>(MAT_DIALOG_DATA);
 
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder, private taskService: TaskService) { 
     this.form = this.fb.group({
+      id: [''],
       head: ['', Validators.required],
       body: [''],
       ticket: [null],
       comment: [null],
-      statusId: this.data.statusId,
-      deskId: this.data.deskId
+      statusId: [''],
+      deskId: ['']
+    });
+  }
+
+  ngOnInit() {
+    this.taskService.getTasksId(this.id).subscribe((data) => {
+      this.form = this.fb.group({
+        id: data.id,
+        head: [data.head, Validators.required],
+        body: [data.body],
+        ticket: [data.ticket],
+        comment: [data.comment],
+        statusId: [data.statusId],
+        deskId: [data.deskId]
+      });
     });
   }
 

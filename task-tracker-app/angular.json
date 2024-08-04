@@ -61,7 +61,8 @@
               "buildTarget": "task-tracker-app:build:production"
             },
             "development": {
-              "buildTarget": "task-tracker-app:build:development"
+              "buildTarget": "task-tracker-app:build:development",
+              "proxyConfig": "proxy.config.json"
             }
           },
           "defaultConfiguration": "development"
