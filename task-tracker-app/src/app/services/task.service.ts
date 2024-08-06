@@ -18,6 +18,10 @@ export class TaskService {
     return this.http.get<TaskModel>(`/api/Tasks/${id}`);
   }
 
+  public getTasksdeskIdstatusId(deskId: string, statusId: string): Observable<TaskModel[]> {
+    return this.http.get<TaskModel[]>(`/api/Tasks/${deskId}/${statusId}`);
+  }
+
   public postTasks(project: TaskModel): Observable<string> {
     return this.http.post<string>(`/api/Tasks`, project);
   }

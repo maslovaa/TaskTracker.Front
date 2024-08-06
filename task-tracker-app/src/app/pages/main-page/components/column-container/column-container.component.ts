@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, untracked } from '@angular/core';
 import { NgIf } from "@angular/common";
 import {
   CdkDragDrop,
@@ -17,6 +17,7 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { AddTaskBodyDialogComponent } from "../add-task-body-dialog/add-task-body-dialog.component";
 import { TaskService } from '../../../../services/task.service';
 import { StatusService } from '../../../../services/status.service';
+import { StatusModel } from '../../../../models/status-model';
 
 @Component({
     selector: 'app-column-container',
@@ -30,16 +31,54 @@ export class ColumnContainerComponent implements OnInit {
   @Input() isAddTask: boolean = false;
   @Input() tasks: TaskModel[] = [];
   @Input() deskId!: string;
-  @Input() statusId!: string;
+  @Input() index!: number;
+  statusId!: string;
 
   dataFromDialog!: TaskModel;
 
   constructor(private dialog: MatDialog, private taskService: TaskService, private statusService: StatusService) {}
 
   ngOnInit() {
-    this.taskService.getTasks().subscribe((data) => {
-      this.tasks = data.filter(o => o.statusId === this.statusId);
-      console.log(this.tasks);
+    this.statusService.getStatuses().subscribe((data) => {
+
+      let status: StatusModel | undefined;
+
+      if (this.index === 0) {
+        status = data.find(o => o.name === 'Open');
+      }
+
+      if (this.index === 1) {
+        status = data.find(o => o.name === 'Develop');
+      }
+
+      if (this.index === 2) {
+        status = data.find(o => o.name === 'Review');
+      }
+
+      if (this.index === 3) {
+        status = data.find(o => o.name === 'Test');
+      }
+
+      if (this.index === 4) {
+        status = data.find(o => o.name === 'Release');
+      }
+
+      if (this.index === 5) {
+        status = data.find(o => o.name === 'Done');
+      }
+
+      if (status === undefined)
+        return;
+
+      if (status.id === undefined)
+        return;
+
+      this.statusId = status.id;
+
+      this.taskService.getTasksdeskIdstatusId(this.deskId, this.statusId).subscribe((data) => {
+        this.tasks = data
+      });
+
     });
   }
 

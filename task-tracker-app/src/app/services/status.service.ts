@@ -13,4 +13,8 @@ export class StatusService {
   public getStatusesId(id: string): Observable<StatusModel> {
     return this.http.get<StatusModel>(`/api/Statuses/${id}`);
   }
+
+  public getStatuses(): Observable<StatusModel[]> {
+    return this.http.get<StatusModel[]>(`/api/Statuses`);
+  }
 }
