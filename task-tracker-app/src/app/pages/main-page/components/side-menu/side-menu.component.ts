@@ -14,6 +14,7 @@ import { ProjectService } from '../../../../services/project.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgClass } from "@angular/common";
 import { DeskService } from '../../../../services/desk.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
     selector: 'app-side-menu',
@@ -42,7 +43,7 @@ export class SideMenuComponent implements OnInit {
     isSetMain: boolean = true;
     isSetAdmin: boolean = false;
 
-    constructor(private router: Router, private projectService: ProjectService, private deskService: DeskService) {}
+    constructor(private router: Router, private projectService: ProjectService, private deskService: DeskService, private cookieService: CookieService) {}
 
     ngOnInit() {
         this.projectService.getProjects().subscribe((data: ProjectModel[]) => {
@@ -90,5 +91,15 @@ export class SideMenuComponent implements OnInit {
     onSetAdmin() {
         this.isSetMain = false;
         this.isSetAdmin = true;
+    }
+
+    onLogout() {
+        this.cookieService.delete('token');
+        this.cookieService.delete('userName');
+        this.cookieService.delete('email');
+        this.cookieService.delete('surname');
+        this.cookieService.delete('name');
+        this.cookieService.delete('patronymic');
+        this.router.navigate(['/authorization']);
     }
 }
