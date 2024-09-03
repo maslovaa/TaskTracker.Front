@@ -6,9 +6,6 @@ import {
 } from '@angular/cdk/drag-drop';
 import { ColumnContainerComponent } from "../column-container/column-container.component";
 import { ActivatedRoute } from '@angular/router';
-import { DeskService } from '../../../../services/desk.service';
-import { TaskModel } from '../../../../models/task-model';
-
 
 @Component({
     selector: 'app-header-desk-container',
@@ -19,19 +16,12 @@ import { TaskModel } from '../../../../models/task-model';
 })
 export class HeaderDeskContainerComponent {
     deskId!: string;
-    tasks: TaskModel[] = []
 
-    constructor(private route: ActivatedRoute, private deskService: DeskService) {}
+    constructor(private route: ActivatedRoute) {}
 
     ngOnInit() {
         this.route.params.subscribe(params => {
           this.deskId = params['deskid'];
-          this.deskService.getDesksId(this.deskId).subscribe((data) => {
-            if (data.tasks === undefined)
-                return;
-
-            this.tasks = data.tasks;
-          });
         });
     }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, untracked } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgIf } from "@angular/common";
 import {
   CdkDragDrop,
@@ -26,10 +26,10 @@ import { StatusModel } from '../../../../models/status-model';
     styleUrl: './column-container.component.css',
     imports: [CdkDropListGroup, CdkDropList, CdkDrag, MatButtonModule, MatDividerModule, MatIconModule, NgIf, TaskCardComponent, MatDialogModule, AddTaskBodyDialogComponent]
 })
-export class ColumnContainerComponent implements OnInit {
+export class ColumnContainerComponent {
   @Input() title!: string;
   @Input() isAddTask: boolean = false;
-  @Input() tasks: TaskModel[] = [];
+  tasks: TaskModel[] = [];
   @Input() deskId!: string;
   @Input() index!: number;
   statusId!: string;
@@ -38,7 +38,11 @@ export class ColumnContainerComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private taskService: TaskService, private statusService: StatusService) {}
 
-  ngOnInit() {
+  ngOnChanges() {
+    this.getStatus();
+  }
+
+  getStatus() {
     this.statusService.getStatuses().subscribe((data) => {
 
       let status: StatusModel | undefined;

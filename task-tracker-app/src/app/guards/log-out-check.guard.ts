@@ -7,7 +7,6 @@ export const logOutCheckGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   if (cookieService.check('token')) {
-    console.log('1');
     router.navigate(['/main']);
     return false;
   }
