@@ -44,6 +44,7 @@ export class UpdateProjectBodyDialogComponent implements OnInit {
       startDate: ['', Validators.required],
       endDate: [null],
       status: ['', Validators.required],
+      ownerId: ['', Validators.required]
     });
   }
 
@@ -56,6 +57,7 @@ export class UpdateProjectBodyDialogComponent implements OnInit {
         startDate: [data.startDate, Validators.required],
         endDate: [data.endDate],
         status: [data.status, Validators.required],
+        ownerId: [data.ownerId, Validators.required]
       });
     });
   }

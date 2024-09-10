@@ -17,7 +17,7 @@ import { UpdateProjectBodyDialogComponent } from '../update-project-body-dialog/
   styleUrl: './projects-container.component.css'
 })
 export class ProjectsContainerComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['update', 'delete', 'name', 'description', 'startDate', 'endDate', 'status'];
+  displayedColumns: string[] = ['update', 'delete', 'name', 'description', 'startDate', 'endDate', 'status', 'fullName'];
   dataSource = new MatTableDataSource<ProjectModel>();
   dataFromDialogProject!: ProjectModel;
 
@@ -47,7 +47,8 @@ export class ProjectsContainerComponent implements AfterViewInit, OnInit {
                 description: this.dataFromDialogProject.description,
                 startDate: this.dataFromDialogProject.startDate,
                 endDate: this.dataFromDialogProject.endDate,
-                status: this.dataFromDialogProject.status
+                status: this.dataFromDialogProject.status,
+                ownerId: this.dataFromDialogProject.ownerId
             };
             
             this.projectService.postProjects(project).subscribe((data: string) => {
@@ -72,7 +73,8 @@ export class ProjectsContainerComponent implements AfterViewInit, OnInit {
               description: this.dataFromDialogProject.description,
               startDate: this.dataFromDialogProject.startDate,
               endDate: this.dataFromDialogProject.endDate,
-              status: this.dataFromDialogProject.status
+              status: this.dataFromDialogProject.status,
+              ownerId: this.dataFromDialogProject.ownerId
           };
           
           this.projectService.putProjects(project).subscribe((data) => {

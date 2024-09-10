@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgIf } from "@angular/common";
 import { TaskModel } from "../../../../models/task-model";
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-add-task-body-dialog',
@@ -30,14 +31,15 @@ export class AddTaskBodyDialogComponent {
   readonly dialogRef = inject(MatDialogRef<AddTaskBodyDialogComponent>);
   readonly data = inject(MAT_DIALOG_DATA);
 
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder, private cookieService: CookieService) { 
     this.form = this.fb.group({
       head: ['', Validators.required],
       body: [''],
       ticket: [null],
       comment: [null],
       statusId: this.data.statusId,
-      deskId: this.data.deskId
+      deskId: this.data.deskId,
+      performerId: this.cookieService.get('userId')
     });
   }
 

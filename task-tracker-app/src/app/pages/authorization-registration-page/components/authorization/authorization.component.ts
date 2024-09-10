@@ -30,6 +30,7 @@ export class AuthorizationComponent {
 
   onSubmit(form: LoginModel) {
     this.accountService.login(form).subscribe((data: ResponseLoginModel) => {
+      this.cookieService.set('userId', data.userId);
       this.cookieService.set('token', data.token);
       this.cookieService.set('userName', data.user.userName);
       this.cookieService.set('email', data.user.email);
