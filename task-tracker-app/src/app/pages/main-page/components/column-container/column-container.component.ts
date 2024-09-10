@@ -118,7 +118,8 @@ export class ColumnContainerComponent {
           comment: this.dataFromDialog.comment,
           ticket: this.dataFromDialog.ticket,
           statusId: this.dataFromDialog.statusId,
-          deskId: this.dataFromDialog.deskId
+          deskId: this.dataFromDialog.deskId,
+          performerId: this.dataFromDialog.performerId
         };
 
         this.taskService.postTasks(task).subscribe((data) => {

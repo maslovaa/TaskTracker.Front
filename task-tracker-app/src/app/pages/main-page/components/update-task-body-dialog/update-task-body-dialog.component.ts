@@ -39,7 +39,8 @@ export class UpdateTaskBodyDialogComponent implements OnInit {
       ticket: [null],
       comment: [null],
       statusId: [''],
-      deskId: ['']
+      deskId: [''],
+      performerId: ['']
     });
   }
 
@@ -52,7 +53,8 @@ export class UpdateTaskBodyDialogComponent implements OnInit {
         ticket: [data.ticket],
         comment: [data.comment],
         statusId: [data.statusId],
-        deskId: [data.deskId]
+        deskId: [data.deskId],
+        performerId: [data.performerId]
       });
     });
   }

@@ -6,5 +6,8 @@
         <div>
             Описание: {{ task.body }}
         </div>
+        <div>
+            Исполнитель: {{ task.performer?.surname + ' ' + task.performer?.name + ' ' + task.performer?.patronymic }}
+        </div>
     </mat-card-content>
 </mat-card>

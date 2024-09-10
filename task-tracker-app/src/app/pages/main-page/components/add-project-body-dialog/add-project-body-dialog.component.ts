@@ -10,6 +10,7 @@ import { NgIf } from "@angular/common";
 import { ProjectModel } from "../../../../models/project-model";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-add-project-body-dialog',
@@ -35,6 +36,7 @@ export class AddProjectBodyDialogComponent {
 
   constructor(
     private fb: FormBuilder,
+    private cookieService: CookieService,
     public dialogRef: MatDialogRef<AddProjectBodyDialogComponent>
   ) { 
     this.form = this.fb.group({
@@ -43,6 +45,7 @@ export class AddProjectBodyDialogComponent {
       startDate: ['', Validators.required],
       endDate: [null],
       status: ['', Validators.required],
+      ownerId: this.cookieService.get('userId')
     });
   }
 

@@ -14,6 +14,7 @@ export const authCheckGuard: CanActivateFn = (route, state) => {
       return data;
     }),
     catchError(() => {
+      cookieService.delete('userId');
       cookieService.delete('token');
       cookieService.delete('userName');
       cookieService.delete('email');

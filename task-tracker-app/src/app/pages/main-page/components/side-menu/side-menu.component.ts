@@ -42,10 +42,12 @@ export class SideMenuComponent implements OnInit {
     activeDeskId?: string;
     isSetMain: boolean = true;
     isSetAdmin: boolean = false;
+    userName!: string;
 
     constructor(private router: Router, private projectService: ProjectService, private deskService: DeskService, private cookieService: CookieService) {}
 
     ngOnInit() {
+        this.userName = this.cookieService.get('userName');
         this.projectService.getProjects().subscribe((data: ProjectModel[]) => {
             this.isSetMain = true;
             this.router.navigate(['/main']);
@@ -94,6 +96,7 @@ export class SideMenuComponent implements OnInit {
     }
 
     onLogout() {
+        this.cookieService.delete('userId');
         this.cookieService.delete('token');
         this.cookieService.delete('userName');
         this.cookieService.delete('email');

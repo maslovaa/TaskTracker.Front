@@ -8,6 +8,7 @@ export interface ProjectModel {
     startDate: Date;
     endDate?: Date;
     status: string;
+    ownerId: string;
     owner?: UserModel;
     users?: UserModel[];
     desks?: DeskModel[];

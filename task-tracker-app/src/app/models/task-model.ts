@@ -1,4 +1,5 @@
 import { StatusModel } from "./status-model";
+import { UserModel } from "./user-model";
 
 export interface TaskModel {
     id?: string;
@@ -8,4 +9,6 @@ export interface TaskModel {
     comment: string;
     statusId: string;
     deskId: string;
+    performerId: string;
+    performer?: UserModel;
 }
